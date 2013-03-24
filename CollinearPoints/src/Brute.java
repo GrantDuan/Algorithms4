@@ -1,18 +1,22 @@
-import java.util.Arrays;;
+import java.util.Arrays;
 
 public class Brute {
 
     private Point[] points;
 
-    public Brute(Point[] points) {
+    public Brute() {
+
+    }
+
+    private Brute(Point[] points) {
         this.points = points;
     }
 
-    public void sort() {
+    private void sort() {
         Arrays.sort(points);
     }
 
-    public void printLineSegments() {
+    private void printLineSegments() {
         sort();
         int n = points.length;
         for (int i = 0; i < n; i++) {
