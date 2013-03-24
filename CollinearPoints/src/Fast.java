@@ -32,8 +32,7 @@ public class Fast {
                             Arrays.sort(ps, j - num + 1, j + 1);
                             points[i].drawTo(ps[j]);
                             String out = points[i].toString();
-                            for(int k = j-num +1; k<j+1; k++)
-                            {
+                            for (int k = j - num + 1; k < j + 1; k++) {
                                 out = out + " -> " + ps[k].toString();
                             }
                             StdOut.println(out);
@@ -43,10 +42,9 @@ public class Fast {
                     if (num > 2) {
                         Arrays.sort(ps, j - num, j);
                         points[i].drawTo(ps[j - 1]);
-                        
+
                         String out = points[i].toString();
-                        for(int k = j-num; k<j; k++)
-                        {
+                        for (int k = j - num; k < j; k++) {
                             out = out + " -> " + ps[k].toString();
                         }
                         StdOut.println(out);
