@@ -8,42 +8,36 @@ public class Fast {
         this.points = points;
     }
 
-    public void Sort() {
+    public void sort() {
         Arrays.sort(points);
     }
-    
-    public void PrintLineSegments() {        
+
+    public void printLineSegments() {
+        sort();
         int n = points.length;
-        for (int i = 0; i < n-3; i++) {
-          Point[] ps = Arrays.copyOfRange(points, n-i-1, n-1);
-          Arrays.sort(ps, points[i].SLOPE_ORDER);
-          int num = 1;
-          for(int j = 1; j< ps.length;j++)
-          {              
-              
-              if(points[i].slopeTo(ps[j-1]) == points[i].slopeTo(ps[j]))
-              {
-                  num++;
-              }
-              else
-              {
-                  if(num>3)
-                  {
-                      Point[] line = new Point[num];
-                      line[0] = points[i];
-                      for(int k = 0;k<num;k++)
-                      {
-                          line[k +1] = ps[j-k];
-                      }
-                      
-                      Arrays.sort(line);
-                      line[0].drawTo(line[num-1]);
-                  }
-                  num = 1;
-              }
-              
-              
-          }
+        for (int i = 0; i < n - 3; i++) {
+            Point[] ps = Arrays.copyOfRange(points, i + 1, n);
+            Arrays.sort(ps, points[i].SLOPE_ORDER);
+            int num = 1;
+            for (int j = 1; j < ps.length; j++) {
+
+                if (points[i].slopeTo(ps[j - 1]) == points[i].slopeTo(ps[j])) {
+                    num++;
+                    if (j == ps.length - 1) {
+                        if (num > 2) {
+                            Arrays.sort(ps, j - num + 1, j + 1);
+                            points[i].drawTo(ps[j]);
+                        }
+                    }
+                } else {
+                    if (num > 2) {
+                        Arrays.sort(ps, j - num, j - 1);
+                        points[i].drawTo(ps[j - 1]);
+                    }
+                    num = 1;
+                }
+
+            }
         }
     }
 
@@ -64,7 +58,7 @@ public class Fast {
         }
 
         Fast fast = new Fast(points);
-        fast.Sort();
+        fast.printLineSegments();
 
     }
 
