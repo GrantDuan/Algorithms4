@@ -24,12 +24,13 @@ public class Deque<Item> implements Iterable<Item> {
         if (item == null)
             throw new java.lang.NullPointerException();
         Node newNode = new Node(item);
-        if (first != null)
+        if (size == 0) {
+            last = newNode;
+        } else {
+            newNode.next = first;
             first.pre = newNode;
-        newNode.next = first;
+        }
         first = newNode;
-        if (size == 0)
-            last = first;
 
         size++;
     }
@@ -60,10 +61,10 @@ public class Deque<Item> implements Iterable<Item> {
         if (size == 1) {
             first = null;
             last = null;
+        } else {
+            first = temp.next;
+            first.pre = null;
         }
-
-        first = temp.next;
-        first.pre = null;
         size--;
         return temp.value;
     }
@@ -77,9 +78,10 @@ public class Deque<Item> implements Iterable<Item> {
         if (size == 1) {
             first = null;
             last = null;
+        } else {
+            last = temp.pre;
+            last.next = null;
         }
-        last = temp.pre;
-        last.next = null;
         size--;
         return temp.value;
     }

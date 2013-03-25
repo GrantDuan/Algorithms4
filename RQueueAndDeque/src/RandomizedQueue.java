@@ -30,20 +30,14 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     {
         if (isEmpty())
             throw new java.util.NoSuchElementException();
-
-        int index = StdRandom.uniform(size());
-        Item item = itemList.get(index);
-        itemList.remove(index);
-        return item;
+        return itemList.removeRandomly();
     }
 
     public Item sample() // return (but do not delete) a random item
     {
         if (isEmpty())
             throw new java.util.NoSuchElementException();
-        int index = StdRandom.uniform(size());
-        Item item = itemList.get(index);
-        return item;
+        return itemList.getRandomly();
     }
 
     public Iterator<Item> iterator() // return an independent iterator over
@@ -59,12 +53,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
         public RQueueIterator() {
             items = (Item[]) itemList.toArray();
-            for (int i = 0; i < items.length; i++) {
-                int index = StdRandom.uniform(i + 1);
-                Item temp = items[index];
-                items[index] = items[i];
-                items[i] = temp;
-            }
+            StdRandom.shuffle(items);
 
         }
 
@@ -93,24 +82,24 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     private class ArrayList {
         private Object[] items;
         private int size;
-        private int capacity;
+        private int currentIndex;
 
         public ArrayList() {
-            capacity = 8;
-            items = new Object[capacity];
+            items = new Object[8];
         }
 
         public void add(Item item) {
             if (item == null)
                 throw new java.lang.NullPointerException();
 
-            items[size] = item;
+            items[currentIndex++] = item;
             size++;
-            if (size == capacity) {
-                capacity *= 2;
-                Object[] newArray = new Object[capacity];
-                for (int i = 0; i < size; i++) {
-                    newArray[i] = items[i];
+            if (currentIndex == items.length) {
+                currentIndex = 0;
+                Object[] newArray = new Object[items.length * 2];
+                for (int i = 0; i < items.length; i++) {
+                    if (items[i] != null)
+                        newArray[currentIndex++] = items[i];
                 }
                 items = newArray;
             }
@@ -118,27 +107,41 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         }
 
         public void remove(int index) {
-            if (index >= size)
+            if (index >= currentIndex)
                 throw new java.util.NoSuchElementException();
-            for (int i = index; i < size - 1; i++) {
-                items[i] = items[i + 1];
-            }
+
+            items[index] = null;
             size--;
 
-            if (size * 4 < capacity) {
-                capacity /= 2;
-                Object[] newArray = new Object[capacity];
-                for (int i = 0; i < size; i++) {
-                    newArray[i] = items[i];
+            if (size * 4 < items.length) {
+
+                Object[] newArray = new Object[items.length / 2];
+                currentIndex = 0;
+                for (int i = 0; i < items.length; i++) {
+                    if (items[i] != null)
+                        newArray[currentIndex++] = items[i];
                 }
+
                 items = newArray;
             }
         }
 
-        public Item get(int index) {
-            if (index >= size)
-                throw new java.util.NoSuchElementException();
+        public Item removeRandomly() {
 
+            int index = StdRandom.uniform(currentIndex);
+            while (items[index] == null) {
+                index = StdRandom.uniform(currentIndex);
+            }
+            Item result = (Item) items[index];
+            remove(index);
+            return result;
+        }
+
+        public Item getRandomly() {
+            int index = StdRandom.uniform(currentIndex);
+            while (items[index] == null) {
+                index = StdRandom.uniform(currentIndex);
+            }
             return (Item) items[index];
         }
 
@@ -148,10 +151,11 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
         public Object[] toArray() {
             Object[] result = new Object[size];
-            for (int i = 0; i < size; i++) {
-                result[i] = items[i];
-            }
-
+            int id = 0;
+            for (int i = 0; i < currentIndex; i++) {
+                if (items[i] != null)
+                    result[id++] = items[i];
+            }            
             return result;
         }
 
