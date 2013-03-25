@@ -16,6 +16,7 @@ public class Brute {
         Arrays.sort(points);
     }
 
+    //print line segments
     private void printLineSegments() {
         sort();
         int n = points.length;
