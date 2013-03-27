@@ -27,7 +27,7 @@ public class Solver {
         else if (goal2 != null)
             return false;
         else {
-            BestFirstSearch();
+            bestFirstSearch();
             return isSolvable();
         }
     }
@@ -59,7 +59,7 @@ public class Solver {
         return null;
     }
 
-    private void BestFirstSearch() {
+    private void bestFirstSearch() {
         SearchNode n1 = pq.delMin();
         SearchNode n2 = pq2.delMin();
         while (!n1.board.isGoal() && !n2.board.isGoal()) {
@@ -135,9 +135,9 @@ public class Solver {
     }
 
     private class SearchNode implements Comparable<Object> {
-        public Board board;
-        public int moves;
-        public SearchNode pre;
+        private Board board;
+        private int moves;
+        private SearchNode pre;
 
         public SearchNode(Board b) {
             board = b;

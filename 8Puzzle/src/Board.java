@@ -29,10 +29,7 @@ public class Board {
         int number = 0;
         for (int i = 0; i < blocks.length; i++) {
             for (int j = 0; j < blocks.length; j++) {
-                if (blocks[i][j] == 0) {
-                    if (i != blocks.length - 1 || j != blocks.length - 1)
-                        number++;
-                } else {
+                if (blocks[i][j] != 0) {
                     if (i != (blocks[i][j] - 1) / blocks.length
                             || j != (blocks[i][j] - 1) % blocks.length)
                         number++;
@@ -47,9 +44,7 @@ public class Board {
         int number = 0;
         for (int i = 0; i < blocks.length; i++) {
             for (int j = 0; j < blocks.length; j++) {
-                if (blocks[i][j] == 0) {
-                    number += blocks.length * 2 - 2 - i - j;
-                } else {
+                if (blocks[i][j] != 0) {
                     number += Math.abs((blocks[i][j] - 1) / blocks.length - i);
                     number += Math.abs((blocks[i][j]) % blocks.length - 1 - j);
                 }
@@ -98,15 +93,15 @@ public class Board {
         return twin;
     }
 
-    public boolean equals(Object y) // does this board equal y?
+    public boolean equals(Object that) // does this board equal y?
     {
-        if (y == null)
+        if (that == null)
             return false;
-        if (this == y)
+        if (this == that)
             return true;
-        else if (!(y instanceof Board))
+        else if (!(that instanceof Board))
             return false;
-        return ((Board) y).toString().equals(toString());
+        return ((Board) that).toString().equals(toString());
 
     }
 
