@@ -34,7 +34,7 @@ public class Board {
                         number++;
                 } else {
                     if (i != (blocks[i][j] - 1) / blocks.length
-                            || j != blocks[i][j] % blocks.length - 1)
+                            || j != (blocks[i][j] - 1) % blocks.length)
                         number++;
                 }
             }
@@ -66,7 +66,20 @@ public class Board {
     public Board twin() // a board obtained by exchanging two adjacent blocks in
                         // the same row
     {
-        return twin(0, 0, 0, 1);
+        boolean isBlank;
+        for (int i = 0; i < blocks.length; i++) {
+            isBlank = true;
+            for (int j = 0; j < blocks.length; j++) {
+                if (blocks[i][j] != 0 && !isBlank)
+                    return twin(i, j, i, j - 1);
+                if (blocks[i][j] == 0)
+                    isBlank = true;
+                else
+                    isBlank = false;
+
+            }
+        }
+        return null;
     }
 
     private Board twin(int x1, int y1, int x2, int y2) {
@@ -75,6 +88,9 @@ public class Board {
                 || y2 >= blocks.length)
             throw new IndexOutOfBoundsException();
         int[][] newblocks = blocks.clone();
+        for (int i = 0; i < blocks.length; i++) {
+            newblocks[i] = blocks[i].clone();
+        }
         int temp = newblocks[x1][y1];
         newblocks[x1][y1] = newblocks[x2][y2];
         newblocks[x2][y2] = temp;
@@ -86,15 +102,11 @@ public class Board {
     {
         if (y == null)
             return false;
+        if (this == y)
+            return true;
         else if (!(y instanceof Board))
             return false;
-        else if (((Board) y).dimension() != dimension()) {
-            return false;
-        } else if (((Board) y).hamming() != hamming())
-            return false;
-        else if (((Board) y).manhattan() != manhattan())
-            return false;
-        return true;
+        return ((Board) y).toString().equals(toString());
 
     }
 
@@ -110,7 +122,7 @@ public class Board {
         if (y > 0) {
             neighbors.add(twin(x, y, x, y - 1));
         }
-        if (x < blocks.length - 1) {
+        if (y < blocks.length - 1) {
             neighbors.add(twin(x, y, x, y + 1));
         }
         return neighbors;
@@ -119,6 +131,7 @@ public class Board {
     public String toString() // string representation of the board (in the
                              // output format specified below)
     {
+
         String result = blocks.length + System.getProperty("line.separator");
         for (int i = 0; i < blocks.length; i++) {
             for (int j = 0; j < blocks.length; j++) {
