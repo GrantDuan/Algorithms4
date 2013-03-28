@@ -1,4 +1,5 @@
 <<<<<<< Upstream, based on origin/master
+<<<<<<< Upstream, based on origin/master
 /bin
 /.classpath
 /.project
@@ -17,3 +18,8 @@
 /.project
 /test
 >>>>>>> bf8214b fdsa
+=======
+/bin
+/.classpath
+/.project
+>>>>>>> 548a4f7 fd
