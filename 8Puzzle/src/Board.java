@@ -3,10 +3,12 @@ import java.util.ArrayList;
 public class Board {
     private int[][] blocks;
     private int x, y;
+    private String bString;
 
     public Board(int[][] blocks) // construct a board from an N-by-N array of
                                  // blocks
     {
+        bString = "";
         this.blocks = blocks;
         for (int i = 0; i < blocks.length; i++) {
             for (int j = 0; j < blocks.length; j++) {
@@ -46,7 +48,7 @@ public class Board {
             for (int j = 0; j < blocks.length; j++) {
                 if (blocks[i][j] != 0) {
                     number += Math.abs((blocks[i][j] - 1) / blocks.length - i);
-                    number += Math.abs((blocks[i][j]) % blocks.length - 1 - j);
+                    number += Math.abs((blocks[i][j] - 1) % blocks.length - j);
                 }
             }
         }
@@ -126,18 +128,22 @@ public class Board {
     public String toString() // string representation of the board (in the
                              // output format specified below)
     {
+        if (bString.length() == 0) {
+            String result = blocks.length
+                    + System.getProperty("line.separator");
+            for (int i = 0; i < blocks.length; i++) {
+                for (int j = 0; j < blocks.length; j++) {
+                    result += blocks[i][j];
 
-        String result = blocks.length + System.getProperty("line.separator");
-        for (int i = 0; i < blocks.length; i++) {
-            for (int j = 0; j < blocks.length; j++) {
-                result += blocks[i][j];
-
-                if (j < blocks.length - 1)
-                    result += "\t";
-                else
-                    result += System.getProperty("line.separator");
+                    if (j < blocks.length - 1)
+                        result += "\t";
+                    else
+                        result += System.getProperty("line.separator");
+                }
             }
-        }
-        return result;
+            bString = result;
+            return result;
+        } else
+            return bString;
     }
 }

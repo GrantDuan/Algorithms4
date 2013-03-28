@@ -59,13 +59,26 @@ public class Solver {
         return null;
     }
 
+    private boolean contain(SearchNode sn, Board b) {
+        SearchNode t = sn;
+        while (t != null) {
+            if (t.board.equals(b))
+                return true;
+            t = t.pre;
+        }
+        return false;
+    }
+
     private void bestFirstSearch() {
         SearchNode n1 = pq.delMin();
         SearchNode n2 = pq2.delMin();
+
         while (!n1.board.isGoal() && !n2.board.isGoal()) {
+            //StdOut.println(n1.board.toString());
             for (Board b : n1.board.neighbors()) {
                 if (n1.pre != null) {
-                    if (!b.equals(n1.pre.board)) {
+                    // if (!b.equals(n1.pre.board)) {
+                    if (!contain(n1, b)) {
                         SearchNode sn = new SearchNode(b);
                         sn.pre = n1;
                         sn.moves = n1.moves + 1;
@@ -83,7 +96,8 @@ public class Solver {
 
             for (Board b : n2.board.neighbors()) {
                 if (n2.pre != null) {
-                    if (!b.equals(n2.pre.board)) {
+                    // if (!b.equals(n2.pre.board)) {
+                    if (!contain(n2, b)) {
                         SearchNode sn = new SearchNode(b);
                         sn.pre = n2;
                         sn.moves = n2.moves + 1;
@@ -149,7 +163,7 @@ public class Solver {
                 throw new NullPointerException();
             if (!(that instanceof SearchNode))
                 throw new java.lang.IllegalArgumentException();
-            return board.hamming() - ((SearchNode) that).board.hamming();
+            return board.manhattan() - ((SearchNode) that).board.manhattan();
         }
 
     }
