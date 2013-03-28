@@ -1,28 +1,4 @@
-<<<<<<< Upstream, based on origin/master
-<<<<<<< Upstream, based on origin/master
 /bin
 /.classpath
 /.project
-<<<<<<< Upstream, based on origin/master
-<<<<<<< Upstream, based on origin/master
-=======
-/.checkstyle
-/.settings
->>>>>>> 7ff85fc home edit ignore
-=======
-/test
->>>>>>> ffd9d75 merge
-=======
-/bin
-/.classpath
-/.project
-/test
->>>>>>> bf8214b fdsa
-=======
-/bin
-/.classpath
-/.project
->>>>>>> 548a4f7 fd
-/bin
-/.classpath
-/.project
+/.gitignore
