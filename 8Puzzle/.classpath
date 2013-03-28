@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+<<<<<<< Upstream, based on origin/master
 	<classpathentry kind="lib" path="E:/Algorithms/algs4.jar"/>
 	<classpathentry kind="lib" path="E:/Algorithms/stdlib.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+=======
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="D:/Algrithms/algs4.jar"/>
+	<classpathentry kind="lib" path="D:/Algrithms/stdlib.jar"/>
+>>>>>>> 7ff85fc home edit ignore
 	<classpathentry kind="output" path="bin"/>
 </classpath>
