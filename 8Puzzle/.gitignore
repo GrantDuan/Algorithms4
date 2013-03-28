@@ -2,7 +2,11 @@
 /.classpath
 /.project
 <<<<<<< Upstream, based on origin/master
+<<<<<<< Upstream, based on origin/master
 =======
 /.checkstyle
 /.settings
 >>>>>>> 7ff85fc home edit ignore
+=======
+/test
+>>>>>>> ffd9d75 merge
