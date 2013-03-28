@@ -1,3 +1,4 @@
+<<<<<<< Upstream, based on origin/master
 /bin
 /.classpath
 /.project
@@ -10,3 +11,9 @@
 =======
 /test
 >>>>>>> ffd9d75 merge
+=======
+/bin
+/.classpath
+/.project
+/test
+>>>>>>> bf8214b fdsa
