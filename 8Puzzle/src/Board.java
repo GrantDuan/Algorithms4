@@ -46,7 +46,7 @@ public class Board {
             for (int j = 0; j < blocks.length; j++) {
                 if (blocks[i][j] != 0) {
                     number += Math.abs((blocks[i][j] - 1) / blocks.length - i);
-                    number += Math.abs((blocks[i][j]) % blocks.length - 1 - j);
+                    number += Math.abs((blocks[i][j] - 1) % blocks.length - j);
                 }
             }
         }

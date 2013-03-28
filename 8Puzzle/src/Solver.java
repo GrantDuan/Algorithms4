@@ -80,6 +80,7 @@ public class Solver {
 
             }
             n1 = pq.delMin();
+            StdOut.println(n1.board.toString());
 
             for (Board b : n2.board.neighbors()) {
                 if (n2.pre != null) {
@@ -149,7 +150,7 @@ public class Solver {
                 throw new NullPointerException();
             if (!(that instanceof SearchNode))
                 throw new java.lang.IllegalArgumentException();
-            return board.hamming() - ((SearchNode) that).board.hamming();
+            return board.manhattan() - ((SearchNode) that).board.manhattan();
         }
 
     }
