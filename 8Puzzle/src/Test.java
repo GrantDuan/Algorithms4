@@ -22,6 +22,7 @@ public class Test {
         testSolvable("puzzle4x4-80.txt");
         testSolvable("puzzle4x4-hard1.txt");
         
+        
 
     }
 
