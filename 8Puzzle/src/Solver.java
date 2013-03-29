@@ -1,42 +1,34 @@
 public class Solver {
-    private SearchNode root;
-    private SearchNode goal;
+    private SearchNode initialSN;
     private MinPQ<SearchNode> pq;
-    private SearchNode root2;
-    private SearchNode goal2;
     private MinPQ<SearchNode> pq2;
-    private Stack<Board> stack;
+    private boolean isSolvable = false;
+    private boolean isSearched = false;
 
     public Solver(Board initial) // find a solution to the initial board (using
                                  // the A* algorithm)
     {
-        root = new SearchNode(initial);
+        initialSN = new SearchNode(initial);
         pq = new MinPQ<SearchNode>();
-        pq.insert(root);
-        root2 = new SearchNode(initial.twin());
+        pq.insert(initialSN);
+        SearchNode root2 = new SearchNode(initial.twin());
         pq2 = new MinPQ<SearchNode>();
         pq2.insert(root2);
-        stack = new Stack<Board>();
-
     }
 
     public boolean isSolvable() // is the initial board solvable?
     {
-        if (goal != null)
-            return true;
-        else if (goal2 != null)
-            return false;
-        else {
+        if (!isSearched)
             bestFirstSearch();
-            return isSolvable();
-        }
+        return isSolvable;
+
     }
 
     public int moves() // min number of moves to solve initial board; -1 if no
                        // solution
     {
         if (isSolvable()) {
-            return goal.moves;
+            return initialSN.moves;
         }
         return -1;
     }
@@ -44,9 +36,10 @@ public class Solver {
     public Iterable<Board> solution() // sequence of boards in a shortest
                                       // solution; null if no solution
     {
+        Stack<Board> stack = new Stack<Board>();
         if (isSolvable()) {
             if (stack.size() == 0) {
-                SearchNode sn = goal;
+                SearchNode sn = initialSN;
                 stack.push(sn.board);
                 while (sn.pre != null) {
                     sn = sn.pre;
@@ -67,7 +60,6 @@ public class Solver {
             // StdOut.println(n1.board.toString());
             for (Board b : n1.board.neighbors()) {
                 if (n1.pre != null) {
-                    // if (!b.equals(n1.pre.board)) {
                     if (!n1.pre.board.equals(b)) {
                         SearchNode sn = new SearchNode(b, n1);
                         pq.insert(sn);
@@ -84,7 +76,6 @@ public class Solver {
             for (Board b : n2.board.neighbors()) {
                 if (n2.pre != null) {
                     if (!b.equals(n2.pre.board)) {
-                        // if (!contain(n2, b)) {
                         SearchNode sn = new SearchNode(b, n2);
                         pq2.insert(sn);
                     }
@@ -97,12 +88,14 @@ public class Solver {
             n2 = pq2.delMin();
         }
 
-        if (n1.board.isGoal())
-            goal = n1;
+        if (n1.board.isGoal()) {
+            isSolvable = true;
+            initialSN = n1;
+        }
 
         else
-            goal2 = n2;
-
+            isSolvable = false;
+        isSearched = true;
     }
 
     /**

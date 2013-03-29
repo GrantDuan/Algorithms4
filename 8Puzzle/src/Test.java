@@ -23,26 +23,25 @@ public class Test {
         testSolvable("puzzle24.txt");
         testSolvable("puzzle25.txt");
         testSolvable("puzzle26.txt");
-        testSolvable("puzzle32.txt");
+        testSolvable("puzzle2x2-unsolvable1.txt");
+        testSolvable("puzzle2x2-unsolvable2.txt");
+        testSolvable("puzzle2x2-unsolvable3.txt");
+        testSolvable("puzzle3x3-unsolvable.txt");
+        testSolvable("puzzle3x3-unsolvable1.txt");
+        testSolvable("puzzle3x3-unsolvable2.txt");
         testSolvable("puzzle32.txt");
         testSolvable("puzzle33.txt");
         testSolvable("puzzle34.txt");
         testSolvable("puzzle35.txt");
-        // testSolvable("puzzle36.txt");
+        testSolvable("puzzle36.txt");
         testSolvable("puzzle37.txt");
         testSolvable("puzzle38.txt");
         testSolvable("puzzle39.txt");
         testSolvable("puzzle41.txt");
         testSolvable("puzzle44.txt");
-        // testSolvable("puzzle4x4-80.txt");
-        // testSolvable("puzzle4x4-hard1.txt");
-        // testSolvable("puzzle2x2-unsolvable1.txt");
-        // testSolvable("puzzle2x2-unsolvable2.txt");
-        // testSolvable("puzzle2x2-unsolvable3.txt");
-        // testSolvable("puzzle3x3-unsolvable.txt");
-        // testSolvable("puzzle3x3-unsolvable1.txt");
-        // testSolvable("puzzle3x3-unsolvable2.txt");
-        // testSolvable("puzzle4x4-unsolvable.txt");
+        //testSolvable("puzzle4x4-80.txt");
+        //testSolvable("puzzle4x4-hard1.txt");
+        //testSolvable("puzzle4x4-unsolvable.txt");
 
     }
 

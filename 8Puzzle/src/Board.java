@@ -3,6 +3,7 @@ import java.util.ArrayList;
 public class Board {
     private int[][] blocks;
     private int x, y;
+    private int N;
     private String bString;
     private int hamming;
     private int manhattan;
@@ -10,11 +11,12 @@ public class Board {
     public Board(int[][] blocks) // construct a board from an N-by-N array of
                                  // blocks
     {
-        bString = blocks.length + System.getProperty("line.separator");
+        N = blocks.length;
+        bString = N + System.getProperty("line.separator");
 
-        this.blocks = new int[blocks.length][blocks.length];
-        for (int i = 0; i < blocks.length; i++) {
-            for (int j = 0; j < blocks.length; j++) {
+        this.blocks = new int[N][N];
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
 
                 // clone blocks
                 this.blocks[i][j] = blocks[i][j];
@@ -27,36 +29,33 @@ public class Board {
 
                 // hamming
                 if (blocks[i][j] != 0) {
-                    if (i != (blocks[i][j] - 1) / blocks.length
-                            || j != (blocks[i][j] - 1) % blocks.length)
+                    if (i != (blocks[i][j] - 1) / N
+                            || j != (blocks[i][j] - 1) % N)
                         hamming++;
                 }
 
                 // manhattan
                 if (blocks[i][j] != 0) {
-                    manhattan += Math.abs((blocks[i][j] - 1) / blocks.length
-                            - i);
-                    manhattan += Math.abs((blocks[i][j] - 1) % blocks.length
-                            - j);
+                    manhattan += Math.abs((blocks[i][j] - 1) / N - i);
+                    manhattan += Math.abs((blocks[i][j] - 1) % N - j);
                 }
 
                 // toString
                 // string representation of the board
                 bString += blocks[i][j];
-                if (j < blocks.length - 1)
+                if (j < N - 1)
                     bString += "\t";
                 else
                     bString += System.getProperty("line.separator");
 
             }
         }
-    }    
-
+    }
 
     // (where blocks[i][j] = block in row i, column j)
     public int dimension() // board dimension N
     {
-        return blocks.length;
+        return N;
     }
 
     public int hamming() // number of blocks out of place
@@ -78,46 +77,44 @@ public class Board {
                         // (non-blank) blocks in
                         // the same row
     {
-        boolean isBlank;
-        for (int i = 0; i < blocks.length; i++) {
-            isBlank = true;
-            for (int j = 0; j < blocks.length; j++) {
-                if (blocks[i][j] != 0 && !isBlank)
-                    return twin(i, j, i, j - 1);
-                if (blocks[i][j] == 0)
-                    isBlank = true;
-                else
-                    isBlank = false;
 
-            }
+        if (x - 1 >= 0) {
+            if (y + 1 < N)
+                return twin(x - 1, y, x - 1, y + 1);
+            else
+                return twin(x - 1, y, x - 1, y - 1);
+        } else if (x + 1 < N) {
+
+            if (y + 1 < N)
+                return twin(x + 1, y, x + 1, y + 1);
+            else
+                return twin(x + 1, y, x + 1, y - 1);
         }
+
         return null;
     }
 
     private Board twin(int x1, int y1, int x2, int y2) {
-        if (x1 < 0 || y1 < 0 || x2 < 0 || y2 < 0 || x1 >= blocks.length
-                || y1 >= blocks.length || x2 >= blocks.length
-                || y2 >= blocks.length)
-            throw new IndexOutOfBoundsException();
-        int[][] newblocks = blocks.clone();
-        for (int i = 0; i < blocks.length; i++) {
-            newblocks[i] = blocks[i].clone();
-        }
-        int temp = newblocks[x1][y1];
-        newblocks[x1][y1] = newblocks[x2][y2];
-        newblocks[x2][y2] = temp;
-        Board twin = new Board(newblocks);
+        exchange(x1, y1, x2, y2);
+        Board twin = new Board(blocks);
+        exchange(x1, y1, x2, y2);
         return twin;
+    }
+
+    private void exchange(int x1, int y1, int x2, int y2) {
+        int temp = blocks[x1][y1];
+        blocks[x1][y1] = blocks[x2][y2];
+        blocks[x2][y2] = temp;
     }
 
     public boolean equals(Object that) // does this board equal y?
     {
-        if (that == null)
-            return false;
-        if (this == that)
-            return true;
-        else if (!(that instanceof Board))
-            return false;
+         if (that == null)
+         return false;
+         if (this == that)
+         return true;
+         else if (!(that instanceof Board))
+         return false;
         return ((Board) that).toString().equals(toString());
 
     }
@@ -128,13 +125,13 @@ public class Board {
         if (x > 0) {
             neighbors.add(twin(x, y, x - 1, y));
         }
-        if (x < blocks.length - 1) {
+        if (x < N - 1) {
             neighbors.add(twin(x, y, x + 1, y));
         }
         if (y > 0) {
             neighbors.add(twin(x, y, x, y - 1));
         }
-        if (y < blocks.length - 1) {
+        if (y < N - 1) {
             neighbors.add(twin(x, y, x, y + 1));
         }
         return neighbors;
