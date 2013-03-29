@@ -68,46 +68,39 @@ public class Solver {
         }
         return false;
     }
+    
 
     private void bestFirstSearch() {
         SearchNode n1 = pq.delMin();
         SearchNode n2 = pq2.delMin();
 
         while (!n1.board.isGoal() && !n2.board.isGoal()) {
-            //StdOut.println(n1.board.toString());
+            // StdOut.println(n1.board.toString());
             for (Board b : n1.board.neighbors()) {
                 if (n1.pre != null) {
                     // if (!b.equals(n1.pre.board)) {
-                    if (!contain(n1, b)) {
-                        SearchNode sn = new SearchNode(b);
-                        sn.pre = n1;
-                        sn.moves = n1.moves + 1;
+                    if (!n1.pre.board.equals(b)) {
+                        SearchNode sn = new SearchNode(b, n1);
                         pq.insert(sn);
                     }
                 } else {
-                    SearchNode sn = new SearchNode(b);
-                    sn.pre = n1;
-                    sn.moves = n1.moves + 1;
+                    SearchNode sn = new SearchNode(b, n1);
                     pq.insert(sn);
                 }
 
             }
             n1 = pq.delMin();
-            StdOut.println(n1.board.toString());
+            //StdOut.println(n1.board.toString());
 
             for (Board b : n2.board.neighbors()) {
                 if (n2.pre != null) {
-                    // if (!b.equals(n2.pre.board)) {
-                    if (!contain(n2, b)) {
-                        SearchNode sn = new SearchNode(b);
-                        sn.pre = n2;
-                        sn.moves = n2.moves + 1;
+                    if (!b.equals(n2.pre.board)) {
+                    //if (!contain(n2, b)) {
+                        SearchNode sn = new SearchNode(b, n2);
                         pq2.insert(sn);
                     }
                 } else {
-                    SearchNode sn = new SearchNode(b);
-                    sn.pre = n2;
-                    sn.moves = n2.moves + 1;
+                    SearchNode sn = new SearchNode(b, n2);
                     pq2.insert(sn);
                 }
 
@@ -158,13 +151,23 @@ public class Solver {
             board = b;
         }
 
+        public SearchNode(Board b, SearchNode sn) {
+            board = b;
+            if (sn != null) {
+                moves = sn.moves + 1;
+                pre = sn;
+            }
+        }
+
         @Override
         public int compareTo(Object that) {
             if (that == null)
                 throw new NullPointerException();
             if (!(that instanceof SearchNode))
                 throw new java.lang.IllegalArgumentException();
-            return board.manhattan() - ((SearchNode) that).board.manhattan();
+
+            SearchNode t = (SearchNode) that;
+            return board.manhattan() + moves - t.board.manhattan() - t.moves;
         }
 
     }
