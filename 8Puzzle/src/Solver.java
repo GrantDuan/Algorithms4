@@ -58,16 +58,6 @@ public class Solver {
         }
         return null;
     }
-
-    private boolean contain(SearchNode sn, Board b) {
-        SearchNode t = sn;
-        while (t != null) {
-            if (t.board.equals(b))
-                return true;
-            t = t.pre;
-        }
-        return false;
-    }
     
 
     private void bestFirstSearch() {
