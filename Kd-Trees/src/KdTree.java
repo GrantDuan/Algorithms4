@@ -1,4 +1,7 @@
 public class KdTree {
+    private Node root;
+    private int size;
+    
     // construct an empty set of points
     public KdTree() {
     }
@@ -10,18 +13,33 @@ public class KdTree {
 
     // number of points in the set
     public int size() {
-        return 0;
+        return size;
     }
 
     // add the point p to the set (if it is not
     // already in the set)
     public void insert(Point2D p)
     {
-
+        if(size== 0)
+        {
+            root = new Node(){};
+            root.isVertical = true;
+            root.p = p;
+            root.rect = new RectHV(0,0, 1,1);
+        }
+        
+        
     }
 
     // does the set contain the point p?
     public boolean contains(Point2D p) {
+        Node t = root;
+        while(t != null)
+        {
+            if(t.equals(p))
+                return true;
+                
+        }
         return false;
     }
 
@@ -42,4 +60,13 @@ public class KdTree {
     {
         return null;
     }
+    
+    
+    private static class Node {
+        private Point2D p;      // the point
+        private RectHV rect;    // the axis-aligned rectangle corresponding to this node
+        private Node lb;        // the left/bottom subtree
+        private Node rt;        // the right/top subtree
+        private boolean isVertical;
+     }
 }
