@@ -1,6 +1,6 @@
-public class PointSET {    
+public class KdTree {
     // construct an empty set of points
-    public PointSET() {
+    public KdTree() {
     }
 
     // is the set empty?
