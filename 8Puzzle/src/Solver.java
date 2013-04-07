@@ -58,7 +58,6 @@ public class Solver {
         }
         return null;
     }
-    
 
     private void bestFirstSearch() {
         SearchNode n1 = pq.delMin();
@@ -80,12 +79,12 @@ public class Solver {
 
             }
             n1 = pq.delMin();
-            //StdOut.println(n1.board.toString());
+            // StdOut.println(n1.board.toString());
 
             for (Board b : n2.board.neighbors()) {
                 if (n2.pre != null) {
                     if (!b.equals(n2.pre.board)) {
-                    //if (!contain(n2, b)) {
+                        // if (!contain(n2, b)) {
                         SearchNode sn = new SearchNode(b, n2);
                         pq2.insert(sn);
                     }
