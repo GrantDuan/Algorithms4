@@ -260,8 +260,8 @@ public class KdTree {
                 if (rt != null) {
                     if (rt.rect.distanceTo(qry) < dst) {
                         rp = rt.nearest(qry);
-                        if (dst > rt.p.distanceTo(qry))
-                            dst = rt.p.distanceTo(qry);
+                        if (dst > rp.distanceTo(qry))
+                            dst = rp.distanceTo(qry);
                     }
                 }
 
