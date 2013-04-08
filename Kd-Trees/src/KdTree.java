@@ -29,7 +29,7 @@ public class KdTree {
             root.rect = new RectHV(0, 0, 1, 1);
             size++;
         } else {
-            if (root.Insert(p))
+            if (root.insert(p))
                 size++;
         }
 
@@ -41,7 +41,7 @@ public class KdTree {
             return false;
         else if (p == null)
             return false;
-        return root.Contain(p);
+        return root.contain(p);
 
     }
 
@@ -50,7 +50,7 @@ public class KdTree {
         if (root == null)
             return;
         else
-            root.Draw();
+            root.draw();
     }
 
     // all points in the set that
@@ -77,7 +77,7 @@ public class KdTree {
         private Node rt; // the right/top subtree
         private boolean isVertical; // true: separate by x
 
-        private boolean Insert(Point2D p1) {
+        private boolean insert(Point2D p1) {
             if (p1 == null)
                 return false;
             if (p.equals(p1))
@@ -94,7 +94,7 @@ public class KdTree {
 
                         return true;
                     } else {
-                        return lb.Insert(p1);
+                        return lb.insert(p1);
                     }
                 } else {
                     if (rt == null) {
@@ -107,7 +107,7 @@ public class KdTree {
 
                         return true;
                     } else {
-                        return rt.Insert(p1);
+                        return rt.insert(p1);
                     }
                 }
             } else {
@@ -122,7 +122,7 @@ public class KdTree {
 
                         return true;
                     } else {
-                        return lb.Insert(p1);
+                        return lb.insert(p1);
                     }
                 } else {
                     if (rt == null) {
@@ -134,14 +134,14 @@ public class KdTree {
                         rt = n;
                         return true;
                     } else {
-                        return rt.Insert(p1);
+                        return rt.insert(p1);
                     }
                 }
             }
 
         }
 
-        private boolean Contain(Point2D p1) {
+        private boolean contain(Point2D p1) {
             if (p1 == null)
                 return false;
             if (p.equals(p1))
@@ -152,13 +152,13 @@ public class KdTree {
                     if (lb == null) {
                         return false;
                     } else {
-                        return lb.Contain(p1);
+                        return lb.contain(p1);
                     }
                 } else {
                     if (rt == null) {
                         return false;
                     } else {
-                        return rt.Contain(p1);
+                        return rt.contain(p1);
                     }
                 }
             } else {
@@ -166,19 +166,19 @@ public class KdTree {
                     if (lb == null) {
                         return false;
                     } else {
-                        return lb.Contain(p1);
+                        return lb.contain(p1);
                     }
                 } else {
                     if (rt == null) {
                         return false;
                     } else {
-                        return rt.Contain(p1);
+                        return rt.contain(p1);
                     }
                 }
             }
         }
 
-        private void Draw() {
+        private void draw() {
             StdDraw.setPenColor(StdDraw.BLACK);
             StdDraw.setPenRadius(.01);
             p.draw();
@@ -199,37 +199,37 @@ public class KdTree {
 
             }
             if (lb != null)
-                lb.Draw();
+                lb.draw();
             if (rt != null)
-                rt.Draw();
+                rt.draw();
         }
 
-        private ArrayList<Point2D> range(RectHV rect) {
+        private ArrayList<Point2D> range(RectHV rect1) {
             ArrayList<Point2D> result = new ArrayList<Point2D>();
-            if (rect.contains(p))
+            if (rect1.contains(p))
                 result.add(p);
             if (isVertical) {
-                if (p.x() > rect.xmax() && lb != null)
-                    result.addAll(lb.range(rect));
-                else if (p.x() <= rect.xmin() && rt != null)
-                    result.addAll(rt.range(rect));
+                if (p.x() > rect1.xmax() && lb != null)
+                    result.addAll(lb.range(rect1));
+                else if (p.x() <= rect1.xmin() && rt != null)
+                    result.addAll(rt.range(rect1));
                 else {
                     if (lb != null)
-                        result.addAll(lb.range(rect));
+                        result.addAll(lb.range(rect1));
                     else if (rt != null)
-                        result.addAll(rt.range(rect));
+                        result.addAll(rt.range(rect1));
 
                 }
             } else {
-                if (p.y() > rect.ymax() && lb != null)
-                    result.addAll(lb.range(rect));
-                else if (p.y() <= rect.ymin() && rt != null)
-                    result.addAll(rt.range(rect));
+                if (p.y() > rect1.ymax() && lb != null)
+                    result.addAll(lb.range(rect1));
+                else if (p.y() <= rect1.ymin() && rt != null)
+                    result.addAll(rt.range(rect1));
                 else {
                     if (lb != null)
-                        result.addAll(lb.range(rect));
+                        result.addAll(lb.range(rect1));
                     else if (rt != null)
-                        result.addAll(rt.range(rect));
+                        result.addAll(rt.range(rect1));
                 }
             }
 

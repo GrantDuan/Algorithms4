@@ -3,6 +3,7 @@ public class PointSET {
 
     // construct an empty set of points
     public PointSET() {
+        set = new SET<Point2D>();
     }
 
     // is the set empty?
@@ -49,9 +50,9 @@ public class PointSET {
     public Point2D nearest(Point2D p) {
         if (isEmpty())
             return null;
-        Point2D point = new Point2D(3, 3);
+        Point2D point = set.min();
         for (Point2D p1 : set) {
-            if (point.distanceTo(p) > p1.distanceTo(p1))
+            if (point.distanceTo(p) > p1.distanceTo(p))
                 point = p1;
         }
 
