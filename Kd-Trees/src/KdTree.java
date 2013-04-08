@@ -206,8 +206,13 @@ public class KdTree {
 
         private ArrayList<Point2D> range(RectHV rect1) {
             ArrayList<Point2D> result = new ArrayList<Point2D>();
-            if (rect1.contains(p))
+            if (rect1.contains(p)) {
                 result.add(p);
+                StdOut.println(rect1.toString() + " contain " + p.toString());
+            } else {
+                StdOut.println(rect1.toString() + " do not contain "
+                        + p.toString());
+            }
             if (isVertical) {
                 if (p.x() > rect1.xmax() && lb != null)
                     result.addAll(lb.range(rect1));
@@ -216,7 +221,7 @@ public class KdTree {
                 else {
                     if (lb != null)
                         result.addAll(lb.range(rect1));
-                    else if (rt != null)
+                    if (rt != null)
                         result.addAll(rt.range(rect1));
 
                 }
@@ -228,7 +233,7 @@ public class KdTree {
                 else {
                     if (lb != null)
                         result.addAll(lb.range(rect1));
-                    else if (rt != null)
+                    if (rt != null)
                         result.addAll(rt.range(rect1));
                 }
             }
@@ -238,7 +243,7 @@ public class KdTree {
 
         private Point2D nearest(Point2D qry) {
             double dst = p.distanceTo(qry);
-            Point2D lp = p, rp = p; //nearest point of subtrees;
+            Point2D lp = p, rp = p; // nearest point of subtrees;
             if (lb == null && rt == null)
                 return p;
 
