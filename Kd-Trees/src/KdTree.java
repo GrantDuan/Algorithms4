@@ -10,7 +10,7 @@ public class KdTree {
 
     // is the set empty?
     public boolean isEmpty() {
-        return false;
+        return size == 0;
     }
 
     // number of points in the set
@@ -207,11 +207,7 @@ public class KdTree {
         private ArrayList<Point2D> range(RectHV rect1) {
             ArrayList<Point2D> result = new ArrayList<Point2D>();
             if (rect1.contains(p)) {
-                result.add(p);
-                StdOut.println(rect1.toString() + " contain " + p.toString());
-            } else {
-                StdOut.println(rect1.toString() + " do not contain "
-                        + p.toString());
+                result.add(p);   
             }
             if (isVertical) {
                 if (p.x() > rect1.xmax() && lb != null)
