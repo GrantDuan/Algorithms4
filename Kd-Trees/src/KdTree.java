@@ -101,7 +101,7 @@ public class KdTree {
                         Node n = new Node();
                         n.isVertical = !isVertical;
                         n.p = p1;
-                        n.rect = new RectHV(rect.xmin(), rect.ymin(), p.x(),
+                        n.rect = new RectHV(p.x(), rect.ymin(), rect.xmax(),
                                 rect.ymax());
                         rt = n;
 
